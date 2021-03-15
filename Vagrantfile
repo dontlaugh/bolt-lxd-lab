@@ -1,0 +1,39 @@
+# frozen_string_literal: true
+
+user = ENV['USER']
+
+base = <<~SCRIPT
+  useradd -m #{user} -s /bin/bash -G sudo && echo #{user}:#{user} | chpasswd
+SCRIPT
+
+move_configs = <<~SCRIPT
+  mv /tmp/.ssh /home/#{user}/
+  (
+    # manipulate .ssh/authorized_keys so we can log in over ssh as our own user
+    cd /home/#{user}/.ssh
+    ls | grep '\.pub$' | xargs cat >> authorized_keys
+  )
+  chown #{user}:#{user} -R /home/#{user}/.ssh
+  mv /tmp/.gitconfig /home/#{user}/.gitconfig
+  chown #{user}:#{user} /home/#{user}/.gitconfig
+SCRIPT
+
+
+Vagrant.configure('2') do |config|
+  config.vm.provision 'shell', inline: base
+  config.vm.provision 'file', source: '~/.gitconfig', destination: '/tmp/.gitconfig'
+  config.vm.provision 'file', source: '~/.ssh', destination: '/tmp/.ssh'
+  config.vm.provision 'shell', inline: move_configs
+
+  config.vm.define :alpha do |alpha|
+    alpha.vm.network 'private_network', ip: '172.100.50.2'
+    alpha.vm.box = 'generic/ubuntu2010'
+    alpha.vm.network :forwarded_port, guest: 22, host: 20022, host_ip: '127.0.0.1', id: 'ssh'
+  end
+
+  config.vm.define :beta do |beta|
+    beta.vm.network 'private_network', ip: '172.100.50.3'
+    beta.vm.box = 'generic/ubuntu2010'
+    beta.vm.network :forwarded_port, guest: 22, host: 20023, host_ip: '127.0.0.1', id: 'ssh'
+  end
+end
