@@ -18,7 +18,6 @@ move_configs = <<~SCRIPT
   chown #{user}:#{user} /home/#{user}/.gitconfig
 SCRIPT
 
-
 Vagrant.configure('2') do |config|
   config.vm.provision 'shell', inline: base
   config.vm.provision 'file', source: '~/.gitconfig', destination: '/tmp/.gitconfig'
@@ -26,14 +25,14 @@ Vagrant.configure('2') do |config|
   config.vm.provision 'shell', inline: move_configs
 
   config.vm.define :alpha do |alpha|
-    alpha.vm.network 'private_network', ip: '172.100.50.2'
+    alpha.vm.network 'private_network', ip: '172.100.10.2'
     alpha.vm.box = 'generic/ubuntu2010'
-    alpha.vm.network :forwarded_port, guest: 22, host: 20022, host_ip: '127.0.0.1', id: 'ssh'
+    alpha.vm.network :forwarded_port, guest: 22, host: 2022, host_ip: '127.0.0.1', id: 'ssh'
   end
 
   config.vm.define :beta do |beta|
-    beta.vm.network 'private_network', ip: '172.100.50.3'
+    beta.vm.network 'private_network', ip: '172.100.10.3'
     beta.vm.box = 'generic/ubuntu2010'
-    beta.vm.network :forwarded_port, guest: 22, host: 20023, host_ip: '127.0.0.1', id: 'ssh'
+    beta.vm.network :forwarded_port, guest: 22, host: 2023, host_ip: '127.0.0.1', id: 'ssh'
   end
 end
