@@ -6,10 +6,10 @@ groups:
     targets:
       - alpha
       - beta
-#    config:
-#      transport: ssh
-#      ssh:
-#        private-key: /path/to/private_key.pem
+  - name: containers
+    targets:
+      - one
+      - two
 
 targets:
   - name: alpha
@@ -22,6 +22,16 @@ targets:
     config:
       ssh:
         port: 2023
+  - name: one
+    uri: lxd://one
+    config:
+      lxd:
+        remote: alpha
+  - name: two
+    uri: lxd://two
+    config:
+      lxd:
+        remote: beta
 
 
 config:

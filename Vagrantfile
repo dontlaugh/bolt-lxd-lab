@@ -4,6 +4,7 @@ user = ENV['USER']
 
 base = <<~SCRIPT
   useradd -m #{user} -s /bin/bash -G sudo && echo #{user}:#{user} | chpasswd
+  echo "#{user} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/#{user}
 SCRIPT
 
 move_configs = <<~SCRIPT
@@ -28,11 +29,13 @@ Vagrant.configure('2') do |config|
     alpha.vm.network 'private_network', ip: '172.100.10.2'
     alpha.vm.box = 'generic/ubuntu2010'
     alpha.vm.network :forwarded_port, guest: 22, host: 2022, host_ip: '127.0.0.1', id: 'ssh'
+    alpha.vm.network :forwarded_port, guest: 8443, host: 2443, host_ip: '127.0.0.1', id: 'lxd'
   end
 
   config.vm.define :beta do |beta|
     beta.vm.network 'private_network', ip: '172.100.10.3'
     beta.vm.box = 'generic/ubuntu2010'
     beta.vm.network :forwarded_port, guest: 22, host: 2023, host_ip: '127.0.0.1', id: 'ssh'
+    beta.vm.network :forwarded_port, guest: 8443, host: 3443, host_ip: '127.0.0.1', id: 'lxd'
   end
 end
