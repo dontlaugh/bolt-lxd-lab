@@ -39,3 +39,5 @@ lxc remote switch beta
 lxc launch ubuntu/20.10 two
 ```
 
+TODO https://discuss.linuxcontainers.org/t/how-to-use-preesed-to-join-to-existing-cluster/9320/5
+
