@@ -1,4 +1,4 @@
-# bolt-lxd-demo
+# bolt-lxd-lab
 
 Explore configuring virtual machines and LXD containers with Puppet Bolt.
 
