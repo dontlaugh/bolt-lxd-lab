@@ -7,8 +7,13 @@
 # @summary A plan created with bolt plan new.
 # @param targets The targets to run on.
 plan demo::lxd_init (
-  TargetSpec $targets = ["alpha", "beta"]
+  TargetSpec $bootstrap_node = ["alpha"],
 ) {
-  $command_result = run_command('lxd init --auto --trust-password=demo --network-address=0.0.0.0', $targets, _run_as => 'root')
+  $preseed = epp('demo/preseed.yaml', {})
+  #TODO: find a way to bootstrap another cluster node. Where are the certs on the bootstrap node
+  #write_file($preseed, '/tmp/preseed.yaml', $bootstrap_node)
+  #run_command('cat /tmp/preseed.yaml | lxd init --preseed --auto --network-address=0.0.0.0', $bootstrap_node)
+
+  $command_result = run_command('lxd init --auto --trust-password=demo --network-address=0.0.0.0', $bootstrap_node, _run_as => 'root')
   return $command_result
 }

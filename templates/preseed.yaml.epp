@@ -1,0 +1,33 @@
+<%- |
+  String $trust_password = "demo",
+  String $server_name = "alpha",
+  String $server_addr = "172.100.10.2:8443",
+| -%>
+config:
+  core.trust_password: <%= $trust_password %>
+  core.https_address: <%= $server_addr %>
+  images.auto_update_interval: 15
+storage_pools:
+  - name: default
+    driver: dir
+networks:
+  - name: lxdbr0
+    type: bridge
+    config:
+      ipv4.address: 192.168.100.14/24
+      ipv6.address: none
+profiles:
+  - name: default
+    devices:
+      root:
+        path: /
+        pool: default
+        type: disk
+      eth0:
+        name: eth0
+        nictype: bridged
+        parent: lxdbr0
+        type: nic
+cluster:
+  server_name: <%= $server_name %>
+  enabled: true
