@@ -41,7 +41,7 @@ Vagrant.configure('2') do |config|
     beta.vm.box = 'generic/ubuntu2010'
     beta.vm.network :forwarded_port, guest: 22, host: 2023, host_ip: '127.0.0.1', id: 'ssh'
     beta.vm.network :forwarded_port, guest: 8443, host: 3443, host_ip: '127.0.0.1', id: 'lxd'
-    alpha.vm.provider 'virtualbox' do |v|
+    beta.vm.provider 'virtualbox' do |v|
       v.cpus = 4
       v.memory = 1024 * 12
     end

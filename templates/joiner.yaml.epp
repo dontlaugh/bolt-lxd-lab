@@ -1,0 +1,20 @@
+<%- |
+  String $trust_password = "demo",
+  String $server_name,
+  String $certificate,
+  String $server_addr = "172.100.10.3:8443",
+  String $cluster_addr = "172.100.10.2:8443",
+| -%>
+cluster:
+  enabled: true
+  server_name: <%= $server_name %>
+  server_address: <%= $server_addr %>
+  cluster_address: <%= $cluster_addr %>
+  cluster_certificate: | 
+    <%= $certificate %>
+  cluster_password: sekret
+  member_config:
+  - entity: storage-pool
+    name: default
+    key: source
+    value: ""

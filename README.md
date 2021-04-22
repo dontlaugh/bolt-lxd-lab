@@ -2,12 +2,6 @@
 
 Explore configuring virtual machines and LXD containers with Puppet Bolt.
 
-
-```
-bolt plan new demo::install_lxd --pp
-bolt plan new demo::lxd_init --pp
-```
-
 ## Set Up LXD
 
 First we set up LXD in our two VMs.
