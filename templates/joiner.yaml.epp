@@ -10,8 +10,7 @@ cluster:
   server_name: <%= $server_name %>
   server_address: <%= $server_addr %>
   cluster_address: <%= $cluster_addr %>
-  cluster_certificate: | 
-    <%= $certificate %>
+  cluster_certificate: "<%= $certificate %>"
   cluster_password: sekret
   member_config:
   - entity: storage-pool

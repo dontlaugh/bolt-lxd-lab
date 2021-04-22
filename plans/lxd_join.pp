@@ -12,9 +12,9 @@ plan demo::lxd_join (
   # We run this task on localhost, because that's where we downloaded the file
   $result = run_task('demo::mangle_cert', $bootstrap_node, 'cert_path' => $cert_path)
   #out::message($result)
-  $certificate = $result[0].value['_output']
+  $certificate = $result[0]["cert"]
   out::message($certificate)
-  $preseed = epp('demo/joiner.yaml', { 'server_name' => 'beta', 'certificate' => $certificate })
+  $preseed = epp('demo/joiner.yaml',  'server_name' => 'beta', 'certificate' => $certificate)
   write_file($preseed, '/tmp/join.yaml', $join_nodes)
   $result = run_command('cat /tmp/join.yaml | lxd init --preseed', $join_nodes, _run_as => 'root')
 
