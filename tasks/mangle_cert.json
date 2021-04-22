@@ -1,0 +1,10 @@
+{
+    "description": "Strip the newlines from a PEM-encoded cert",
+    "parameters": {
+        "cert_path": {
+            "type": "String",
+            "description": "path to PEM-encoded cert"
+        }        
+    },
+    "supports_noop": false
+}

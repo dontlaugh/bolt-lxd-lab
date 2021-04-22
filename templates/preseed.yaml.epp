@@ -1,0 +1,37 @@
+<%- |
+  String $trust_password = "demo",
+  String $server_name = "alpha",
+  String $server_addr = "172.100.10.2:2443",
+| -%>
+config:
+  core.trust_password: <%= $trust_password %>
+  core.https_address: <%= $server_addr %>
+  images.auto_update_interval: 15
+storage_pools:
+  - name: default
+    driver: dir
+networks:
+- config:
+    bridge.mode: fan
+    fan.underlay_subnet: auto
+  description: ""
+  name: lxdfan0
+  type: ""
+  project: default
+profiles:
+- config: {}
+  description: ""
+  devices:
+    eth0:
+      name: eth0
+      network: lxdfan0
+      type: nic
+    root:
+      path: /
+      pool: default
+      type: disk
+  name: default
+projects: []
+cluster:
+  server_name: <%= $server_name %>
+  enabled: true
