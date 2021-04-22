@@ -1,9 +1,7 @@
 #!/bin/sh
 
-# We process a PEM-encoded cert (with newlines) into something suitable for 
-# embedding within yaml
+# We prepend 4 spaces to every line in our PEM-encoded cert, such that the
+# vengeful and jealous YAML god is satisfied.
 
-mangled=$(sed ':a;N;$!ba;s/\n/\n\n/g' $PT_cert_path)
-
-# We print json to stdout for easy use in Bolt plans
-echo -n "{ \"cert\": \"${mangled}\"}"
+# We access our task parameter with env vars prefixed with $PT_
+cat $PT_cert_path | awk '{ print "    " $0 }'

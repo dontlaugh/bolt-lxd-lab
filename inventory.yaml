@@ -26,12 +26,12 @@ targets:
     uri: lxd://one
     config:
       lxd:
-        remote: alpha
+        remote: lab
   - name: two
     uri: lxd://two
     config:
       lxd:
-        remote: beta
+        remote: lab
 
 
 config:
