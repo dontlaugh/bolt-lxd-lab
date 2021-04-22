@@ -31,15 +31,19 @@ Vagrant.configure('2') do |config|
     alpha.vm.network :forwarded_port, guest: 22, host: 2022, host_ip: '127.0.0.1', id: 'ssh'
     alpha.vm.network :forwarded_port, guest: 8443, host: 2443, host_ip: '127.0.0.1', id: 'lxd'
     alpha.vm.provider 'virtualbox' do |v|
-      v.cpus = 8
+      v.cpus = 4
       v.memory = 1024 * 12
-   end
+    end
   end
 
-#   config.vm.define :beta do |beta|
-#     beta.vm.network 'private_network', ip: '172.100.10.3'
-#     beta.vm.box = 'generic/ubuntu2010'
-#     beta.vm.network :forwarded_port, guest: 22, host: 2023, host_ip: '127.0.0.1', id: 'ssh'
-#     beta.vm.network :forwarded_port, guest: 8443, host: 3443, host_ip: '127.0.0.1', id: 'lxd'
-#   end
+  config.vm.define :beta do |beta|
+    beta.vm.network 'private_network', ip: '172.100.10.3'
+    beta.vm.box = 'generic/ubuntu2010'
+    beta.vm.network :forwarded_port, guest: 22, host: 2023, host_ip: '127.0.0.1', id: 'ssh'
+    beta.vm.network :forwarded_port, guest: 8443, host: 3443, host_ip: '127.0.0.1', id: 'lxd'
+    alpha.vm.provider 'virtualbox' do |v|
+      v.cpus = 4
+      v.memory = 1024 * 12
+    end
+  end
 end
