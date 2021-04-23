@@ -13,7 +13,7 @@ storage_pools:
 networks:
 - config:
     bridge.mode: fan
-    fan.underlay_subnet: auto
+    fan.underlay_subnet: 172.100.10.0/24
   description: ""
   name: lxdfan0
   type: ""
