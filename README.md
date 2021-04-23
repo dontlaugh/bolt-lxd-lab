@@ -51,13 +51,25 @@ We can see the uploaded file by running an ad hoc command.
 bolt command run --target beta 'cat /tmp/join.yaml'
 ```
 
-We can also see that our clustering worked by running `lxc` inside the VMs.
+Bolt can help us download it as a backup, too.
 
 ```
-bolt command run --target alpha,beta 'lxc cluster list' --run_as root
+bolt file download -t beta /tmp/join.yaml /tmp
 ```
 
-_Root is required, because our ssh user isn't a member of the lxd group._
+We can also check that our clustering worked by running `lxc` inside the VMs.
+
+```
+bolt command run -t alpha,beta 'lxc cluster list' --run_as root
+```
+
+Root is required, because our ssh user isn't a member of the lxd group.
+
+Let's fix that.
+
+```
+bolt command run -t alpha,beta "usermod -aG lxd $USER" --run_as root
+```
 
 ## Configure lxc
 
@@ -103,4 +115,5 @@ bolt command run -t containers 'apt-get update'
 
 ## TODO
 
-* Fix fan networking 
+* Fix fan networking
+* [Try something more complicated](https://sleeplessbeastie.eu/2020/10/07/how-to-install-kubernetes-on-lxd/)

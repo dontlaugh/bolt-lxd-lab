@@ -1,5 +1,5 @@
 {
-    "description": "Strip the newlines from a PEM-encoded cert",
+    "description": "Indent PEM-encoded cert by exactly 4 spaces",
     "parameters": {
         "cert_path": {
             "type": "String",
