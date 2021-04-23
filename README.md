@@ -113,7 +113,17 @@ defined in **inventory.yaml**, and aggregates targets "one" and "two".
 bolt command run -t containers 'apt-get update'
 ```
 
+Finally, because we have configured clustering with a [fan network overlay](https://wiki.ubuntu.com/FanNetworking),
+our containers can route to each other, even across hosts.
+
+```
+# get the ip for container two
+lxc info two | awk '/eth0:\s{1}inet\s+/ {print $3}'
+
+# run a single ping to test connectivity
+bolt command run -t one 'ping -c 1 <two's ip>'
+```
+
 ## TODO
 
-* Fix fan networking
 * [Try something more complicated](https://sleeplessbeastie.eu/2020/10/07/how-to-install-kubernetes-on-lxd/)
