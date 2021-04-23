@@ -13,7 +13,7 @@ You should also have some basic knowledge of LXD.
 ## Getting Started
 
 First, run `vagrant up`. Two Ubuntu virtual machines will launch. These
-will **each be given 12 GB of RAM by default**. Adjust that via the 
+will **each be given 6 GB of RAM by default**. Adjust that via the 
 Vagrantfile if you want to use less.
 
 Next, we install LXD in our two VMs using the bolt plan located at

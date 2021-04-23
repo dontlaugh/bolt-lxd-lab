@@ -2,6 +2,10 @@
 
 user = ENV['USER']
 
+# virtual machine ram
+alpha_ram = 6
+beta_ram = 6
+
 setup_user = <<~SCRIPT
   useradd -m #{user} -s /bin/bash -G sudo && echo #{user}:#{user} | chpasswd
   echo "#{user} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/#{user}
@@ -32,7 +36,7 @@ Vagrant.configure('2') do |config|
     alpha.vm.network :forwarded_port, guest: 2443, host: 2443, host_ip: '127.0.0.1', id: 'lxd'
     alpha.vm.provider 'virtualbox' do |v|
       v.cpus = 4
-      v.memory = 1024 * 12
+      v.memory = 1024 * alpha_ram
     end
   end
 
@@ -43,7 +47,7 @@ Vagrant.configure('2') do |config|
     beta.vm.network :forwarded_port, guest: 3443, host: 3443, host_ip: '127.0.0.1', id: 'lxd'
     beta.vm.provider 'virtualbox' do |v|
       v.cpus = 4
-      v.memory = 1024 * 12
+      v.memory = 1024 * beta_ram
     end
   end
 end
