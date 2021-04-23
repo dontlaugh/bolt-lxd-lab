@@ -1,0 +1,14 @@
+{
+    "description": "Launch an LXD container",
+    "parameters": {
+        "name": {
+            "type": "String",
+            "description": "container instance name"
+        },
+        "image": {
+            "type": "String",
+            "description": "base image for container"
+        }
+    },
+    "supports_noop": false
+}
