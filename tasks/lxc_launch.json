@@ -1,13 +1,18 @@
 {
-    "description": "Launch an LXD container",
+    "description": "Launch an LXD container; wraps lxc cli",
     "parameters": {
-        "name": {
-            "type": "String",
-            "description": "container instance name"
-        },
         "image": {
             "type": "String",
             "description": "base image for container"
+        },
+        "name": {
+            "type": "Optional[String]",
+            "description": "container instance name"
+        },
+        "args": {
+            "type": "Optional[String]",
+            "description": "additional arguments to lxc",
+            "default": "-c security.nesting=false -c security.privileged=false"
         }
     },
     "supports_noop": false
