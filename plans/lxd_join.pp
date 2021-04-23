@@ -7,10 +7,9 @@ plan lab::lxd_join (
   TargetSpec $join_nodes = ['beta'],
   String $cert_path = '/var/snap/lxd/common/lxd/server.crt',
 ) {
-  $cert_result = run_task('lab::mangle_cert', $bootstrap_node, 'cert_path' => $cert_path)
+  $cert_result = run_task('lab::indent_cert', $bootstrap_node, 'cert_path' => $cert_path)
   # out::message($cert_result)
   $certificate = $cert_result[0].value['_output']
-  # out::message($certificate)
   $preseed = epp('lab/joiner.yaml',  'server_name' => 'beta', 'certificate' => $certificate)
   write_file($preseed, '/tmp/join.yaml', $join_nodes)
   $result = run_command('cat /tmp/join.yaml | lxd init --preseed', $join_nodes, _run_as => 'root')
