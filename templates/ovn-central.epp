@@ -1,0 +1,20 @@
+<%- |
+  String $local_address,
+  Optional[String] $bootstrap_server_address = undef,
+| -%>
+# Templated and uploaded to /etc/default/ovn-central
+
+# --db-nb-addr to the local address
+# --db-sb-addr to the local address
+# --db-nb-cluster-local-addr to the local address
+# --db-sb-cluster-local-addr to the local address
+# --db-nb-cluster-remote-addr to the bootstrap server's address
+# --db-sb-cluster-remote-addr to the bootstrap server's address
+# --ovn-northd-nb-db to all the addresses (port 6641)
+# --ovn-northd-sb-db to all the addresses (port 6642)
+
+<% if bootstrap_server_address != undef { %>
+OVN_CTL_OPTS="--db-nb-addr <%= $local_address %> --db-sb-addr <%= $local_address %> --db-nb-cluster-local-addr <%= $local_address %> --db-sb-cluster-local-addr <%= $local_address %> --db-nb-cluster-remote-addr <%= $bootstrap_server_address %> --db-sb-cluster-remote-addr <%= $bootstrap_server_address %> --ovn-northd-nb-db <%= $local_address %>:6641,<%= $bootstrap_server_address %>:6641 --ovn-northd-sb-db <%= $local_address %>:6642,<%= $bootstrap_server_address %>:6642"
+<% } else { %>
+OVN_CTL_OPTS="--db-nb-addr <%= $local_address %> --db-sb-addr <%= $local_address %> --db-nb-cluster-local-addr <%= $local_address %> --db-sb-cluster-local-addr <%= $local_address %> --ovn-northd-nb-db <%= $local_address %>:6641,<%= $bootstrap_server_address %>:6641 --ovn-northd-sb-db <%= $local_address %>:6642,<%= $bootstrap_server_address %>:6642"
+<% } %>
