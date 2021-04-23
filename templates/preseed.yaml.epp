@@ -1,7 +1,7 @@
 <%- |
   String $trust_password = "demo",
   String $server_name = "alpha",
-  String $server_addr = "172.100.10.2:2443",
+  String $server_addr = "172.100.10.2:8443",
 | -%>
 config:
   core.trust_password: <%= $trust_password %>

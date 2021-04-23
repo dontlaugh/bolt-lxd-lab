@@ -2,8 +2,8 @@
   String $trust_password = "demo",
   String $server_name,
   String $certificate,
-  String $server_addr = "172.100.10.3:3443",
-  String $cluster_addr = "172.100.10.2:2443",
+  String $server_addr = "172.100.10.3:8443",
+  String $cluster_addr = "172.100.10.2:8443",
 | -%>
 cluster:
   enabled: true

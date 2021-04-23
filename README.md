@@ -79,7 +79,7 @@ remote for our little lab cluster.
 Accept the certificate. The remote trust password is "demo".
 
 ```
-lxc remote add lab 172.100.10.2:2443
+lxc remote add lab 172.100.10.2:8443
 ```
 
 If successful, switch to our new remote and print the cluster members.
